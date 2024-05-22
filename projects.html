@@ -4,7 +4,6 @@
         <title> my projects </title>
     </head>
     <body>
-        <script src="app.js"></script>
         <nav class="navbar">
             <div class="navbar_container">
                 <a href="/" id="navbar_logo">
@@ -34,19 +33,108 @@
                 </ul>
             </div>
         </nav> 
+        <link rel="stylesheet" href="projects.css">
     <div class="work">    
         <div class="work_container">
             <div class="work_content">
                 <h1> my work </h1>
-                <link rel="stylesheet" href="projects.css">
-                <h2>Wordpress webpage bookmarks</h2>
-                <p>I started my journey with making websites in 2022, since then I'm adding some stuff to kindergarten page. (I did not make the page myself from scratch)</p>
-                <p>I did also make a couple of projects using Canva.</p>
-            </div>
-            <div class="work_img-container">
-                <img src="MU.png" alt="about" id="mu_img">
+                <p>This is the stuff that I've done during my computer science classes, at my work or at home.</p>
             </div>
         </div>  
     </div>
+    <title>Static Template</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="carousel">
+        <div class="carousel__item bg-first active">
+          <p>Wordpress Bookmark</p>
+          <div class="word_img-container">
+            <img src="MU.png" alt="word" id="word_img">
+          </div>
+        </div>
+        <div class="carousel__item bg-green">
+          <p> 2D GRAPHICS C++ PROJECT</p>
+       </div>  
+        <div class="carousel__item bg-brown">
+          <p>Caraousel 3</p>
+        </div>
+        <div class="carousel__item bg-blue">
+          <p>Caraousel 4</p>
+        </div>
+      </div>
+      <div class="carousel__buttons">
+        <button type="button" class="carousel-button">&#10094;</button>
+        <button type="button" class="carousel-button">&#10095;</button>
+      </div>
+    </div>
+
+    <script>
+      const carousel = document.querySelector(".carousel");
+      let carouselItems = document.querySelectorAll(".carousel__item");
+      const [btnLeftCarousel, btnRightCarousel] = document.querySelectorAll(
+        ".carousel-button"
+      );
+      let carouselCount = carouselItems.length;
+      let pos = 0;
+      let translateX = 0;
+
+      btnLeftCarousel.addEventListener("click", (e) => {
+        let calculate = pos > 0 ? (pos - 1) % carouselCount : carouselCount;
+        if (pos > 0) translateX = pos === 1 ? 0 : translateX - 100.5;
+        else if (pos <= 0) {
+          translateX = 100.5 * (carouselCount - 1);
+          calculate = carouselCount - 1;
+        }
+
+        console.log(pos);
+
+        pos = slide({
+          show: calculate,
+          disable: pos,
+          translateX: translateX
+        });
+      });
+
+      btnRightCarousel.addEventListener("click", (e) => {
+        let calculate = (pos + 1) % carouselCount;
+        if (pos >= carouselCount - 1) {
+          calculate = 0;
+          translateX = 0;
+        } else {
+          translateX += 100;
+        }
+
+        pos = slide({
+          show: calculate,
+          disable: pos,
+          translateX: translateX
+        });
+      });
+
+      function slide(options) {
+        function active(_pos) {
+          carouselItems[_pos].classList.toggle("active");
+        }
+
+        function inactive(_pos) {
+          carouselItems[_pos].classList.toggle("active");
+        }
+
+        inactive(options.disable);
+        active(options.show);
+
+        document.querySelectorAll(".carousel__item").forEach((item, index) => {
+          if (index === options.show) {
+            item.style.transform = `translateX(-${options.translateX}%) scale(1)`;
+          } else {
+            item.style.transform = `translateX(-${options.translateX}%) scale(0.9)`;
+          }
+        });
+
+        return options.show;
+      }
+    </script>
     </body>
+    <script src="app.js"></script>
 </html>
